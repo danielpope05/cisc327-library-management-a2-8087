@@ -28,6 +28,11 @@ jobs:
           pip install -r requirements.txt
           pip install pytest
 
+      - name: Add project root to Python path
+        run: |
+          echo "PYTHONPATH=${{ github.workspace }}" >> $GITHUB_ENV
+
+
 
       - name: Run tests
         working-directory: .
