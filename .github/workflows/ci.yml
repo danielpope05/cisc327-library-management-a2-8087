@@ -1,0 +1,33 @@
+name: Library Management System Tests
+
+on:
+  push:
+    branches: [ main ]  # Run tests whenever you push to main
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest   # Tells GitHub to use a Linux environment
+
+    steps:
+      # Step 1: Download code from GitHub
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Install Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+
+      # Step 4: Run all test cases (R1–R7)
+      - name: Run tests
+        run: pytest tests/ -v
