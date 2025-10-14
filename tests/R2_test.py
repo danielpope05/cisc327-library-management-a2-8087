@@ -4,11 +4,8 @@
 # - Available copies / Total copies
 # - Actions (Borrow button for available books)
 
-  ####JUST did r2 and implemetationnnnnnnnnnnn
-
 import pytest
 from library_service import (book_catalog_display)
-
 
 ##Test iof all the fields a catalog is supposed to be there are present
 def test_all_keys_present():
@@ -25,12 +22,10 @@ def test_isbn_length_valid():
     for book in book_catalog_display():
         assert len(book["isbn"]) == 13
 
-
 ##### Test that the no of availiable copies is not more that the total copies
 def test_for_consistency():
     for book in book_catalog_display():
         assert book["available_copies"] <= book["total_copies"]
-
 
 ##### Test that author is not empty
 def test_is_author_empty():
