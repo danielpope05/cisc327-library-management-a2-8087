@@ -32,6 +32,11 @@ jobs:
         run: |
           echo "PYTHONPATH=${{ github.workspace }}" >> $GITHUB_ENV
 
+      - name: Initialize database
+        run: |
+          python -c "from database import init_database, add_sample_data; init_database(); add_sample_data()"
+
+
 
 
       - name: Run tests
