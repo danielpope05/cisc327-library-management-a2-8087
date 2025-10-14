@@ -57,8 +57,6 @@ def add_book_to_catalog(title: str, author: str, isbn: str, total_copies: int) -
         return False, "Database error occurred while adding the book."
     
 
-
-#########MEEEEEEEEEEEEEEEEEEEEEEEEE done by mmmeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 def book_catalog_display() -> List[Dict]:
     """
     Displays all the books in a catalog alongside their information
@@ -131,7 +129,7 @@ def borrow_book_by_patron(patron_id: str, book_id: int) -> Tuple[bool, str]:
     
     return True, f'Successfully borrowed "{book["title"]}". Due date: {due_date.strftime("%Y-%m-%d")}.'
 
-#########MEEEEEEEEEEEEEEEEEEEEEEEEE done by mmmeeeeeeeeeeeeeeeeeee
+
 def return_book_by_patron(patron_id: str, book_id: int) -> Tuple[bool, str]:
     """
     Process book return by a patron.
@@ -145,7 +143,6 @@ def return_book_by_patron(patron_id: str, book_id: int) -> Tuple[bool, str]:
     
     TODO: Implement R4 as per requirements
     """
-    # return False, "Book return functionality is not yet implemented."
     
     # Validate patron ID
     if not patron_id or not patron_id.isdigit() or len(patron_id) != 6:
@@ -164,6 +161,7 @@ def return_book_by_patron(patron_id: str, book_id: int) -> Tuple[bool, str]:
         if key["book_id"] == book_id:
             book_borrowed = key
             break
+
     ### The book was not borrowed by the patron
     if book_borrowed is None:
         return False, "Book not borrowed"
@@ -178,7 +176,6 @@ def return_book_by_patron(patron_id: str, book_id: int) -> Tuple[bool, str]:
     ##Calculate late fees
     late_info = calculate_late_fee_for_book(patron_id, book_id)
     late_fee = late_info["fee_amount"]
-    overdue_days = late_info["days_overdue"]
     
     ##Print late fee message
     if late_fee > 0:
@@ -293,11 +290,11 @@ def search_books_in_catalog(search_term: str, search_type: str) -> List[Dict]:
     search_term = search_term.lower()
     search_type = search_type.lower()
 
-    all_books = get_all_books()
+    books = get_all_books()
 
     found = []
 
-    for book in all_books:
+    for book in books:
         if search_type == "title" and search_term in book["title"].lower():
             found.append(book)
         elif search_type == "author" and search_term in book["author"].lower():
@@ -327,7 +324,7 @@ def get_patron_status_report(patron_id: str) -> Dict:
             "late_fees": 0,
             "num_current_borrowed": 0,
             "history": [],
-            "error": "Invalid patron ID"
+            "report_status": "Invalid patron ID. Cannot create a report for unrecognizable patron"
         }
     
     # Info needed on books currently borrowed including the number and the books borrowed
@@ -342,9 +339,9 @@ def get_patron_status_report(patron_id: str) -> Dict:
     late_fees = round(late_fees, 2)
 
     # the borrowing history of each book in history
-    history = []
+    borrow_history = []
     for book in borrowed:
-        history.append({
+        borrow_history.append({
             "book_id": book["book_id"],
             "title": book["title"],
             "author": book["author"],
@@ -359,7 +356,7 @@ def get_patron_status_report(patron_id: str) -> Dict:
         "num_current_borrowed": num_current_borrowed,
         "late_fees": late_fees,
         "borrowed": borrowed,
-        "history": history
+        "history": borrow_history
     }
     
 
