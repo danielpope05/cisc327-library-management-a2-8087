@@ -1,14 +1,14 @@
 
 
 import pytest
-from library_service import (
+from services.library_service import (
     get_patron_status_report
 )
 
 def test_invalid_patron_id():
     """wrong patron_id"""
     result = get_patron_status_report("6666b") 
-    assert {"borrowed","late_fees","num_current_borrowed" ,"history"}.issubset(result)
+    assert {"borrowed","late_fees","num_current_borrowed" ,"borrow_history"}.issubset(result)
     assert result["num_current_borrowed"] == 0
 
 def test_invalid_late_fees():
@@ -19,7 +19,7 @@ def test_invalid_late_fees():
 def test_no_patron_id():
     """patron id not given"""
     result = get_patron_status_report(" ")
-    assert {"borrowed","late_fees","num_current_borrowed" ,"history"}.issubset(result)
+    assert {"borrowed","late_fees","num_current_borrowed" ,"borrow_history"}.issubset(result)
     assert result["num_current_borrowed"] == 0
 
 def test_num_current_borrowed():

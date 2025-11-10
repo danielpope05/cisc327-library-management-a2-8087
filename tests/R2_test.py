@@ -5,7 +5,7 @@
 # - Actions (Borrow button for available books)
 
 import pytest
-from library_service import (book_catalog_display)
+from services.library_service import (book_catalog_display)
 
 ##Test iof all the fields a catalog is supposed to be there are present
 def test_all_keys_present():
