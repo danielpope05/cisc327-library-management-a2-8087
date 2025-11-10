@@ -41,7 +41,7 @@ def test_pay_late_successful(stub_db_fee, gateway_mock):
         description="Late fees for 'Percy Jackson'"
     )
     assert success is True
-    assert "Payment successful" in msg.lower()
+    assert "payment successful" in msg.lower()
     assert txn == "txn_123"
 
 
